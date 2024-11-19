@@ -57,11 +57,17 @@ io.on("connection", (socket) => {
 
   // WebRTC signaling
   socket.on("webrtc-signal", (data) => {
-    console.log("WebRTC Signal:", data.type);
-    socket.to(data.roomCode).emit("webrtc-signal", {
-      ...data,
-      senderId: socket.id,
+    const { type, roomCode, senderId, sdp, candidate } = data;
+  
+    // Relay WebRTC signal to other participants in the room
+    socket.to(roomCode).emit("webrtc-signal", {
+      type,
+      senderId,
+      sdp,
+      candidate,
     });
+  
+    console.log(`WebRTC Signal: ${type} sent in room ${roomCode}`);
   });
 
   // Handle disconnection

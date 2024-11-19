@@ -1,10 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import peerReducer from "./features/peerSlice";
+import callReducer from "./features/callSlice";
 
 export const store = configureStore({
   reducer: {
-    peer: peerReducer,
+    call: callReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["call/setLocalStream", "call/setRemoteStream"],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

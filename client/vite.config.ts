@@ -13,6 +13,6 @@ export default defineConfig({
       key: fs.readFileSync(path.join(certsPath, "private.key")),
       cert: fs.readFileSync(path.join(certsPath, "certificate.crt")),
     },
-    host: "192.168.1.20",
+    host: "192.168.212.126",
   },
 });
